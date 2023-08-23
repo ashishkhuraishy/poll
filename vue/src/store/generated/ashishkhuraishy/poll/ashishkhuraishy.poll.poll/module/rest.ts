@@ -14,6 +14,15 @@
  */
 export type PollParams = object;
 
+export interface PollPollInfo {
+  /** @format uint64 */
+  nexiId?: string;
+}
+
+export interface PollQueryGetPollInfoResponse {
+  PollInfo?: PollPollInfo;
+}
+
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
  */
@@ -240,6 +249,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<PollQueryParamsResponse, RpcStatus>({
       path: `/ashishkhuraishy/poll/poll/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryPollInfo
+   * @summary Queries a PollInfo by index.
+   * @request GET:/ashishkhuraishy/poll/poll/poll_info
+   */
+  queryPollInfo = (params: RequestParams = {}) =>
+    this.request<PollQueryGetPollInfoResponse, RpcStatus>({
+      path: `/ashishkhuraishy/poll/poll/poll_info`,
       method: "GET",
       format: "json",
       ...params,
